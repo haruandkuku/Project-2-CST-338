@@ -8,11 +8,11 @@
 
 
     <TextView
-        android:id="@+id/cancel_order_label"
+        android:id="@+id/earn_money_label"
         android:layout_width="146dp"
         android:layout_height="105dp"
         android:gravity="center"
-        android:text="Cancel your orders!"
+        android:text="Click to earn cash now! Not suspicious or anything!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -22,34 +22,33 @@
         tools:visibility="visible" />
 
     <Button
-        android:id="@+id/cancel_button"
+        android:id="@+id/earn_button"
         android:layout_width="146dp"
         android:layout_height="50dp"
         android:layout_margin="60dp"
         android:layout_marginTop="60dp"
-        android:text="Cancel"
+        android:text="Print Money"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cancelList" />
+        app:layout_constraintTop_toBottomOf="@id/user_money_count" />
 
 
-    <EditText
-        android:id="@+id/cancelList"
+    <TextView
+        android:id="@+id/user_money_count"
         android:layout_width="215dp"
         android:layout_height="55dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:hint="Cancel list temporary"
-        android:inputType="textPassword"
+        android:hint="User Money Temporary"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cancel_order_label" />
+        app:layout_constraintTop_toBottomOf="@id/earn_money_label" />
 
     <Button
-        android:id="@+id/back_button_cancel_order"
+        android:id="@+id/back_button_earn_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"

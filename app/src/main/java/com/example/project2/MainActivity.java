@@ -1,5 +1,7 @@
 package com.example.project2;
 
+import static com.example.project2.AppDatabase.MIGRATION_2_3;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 import androidx.room.migration.Migration;
@@ -15,6 +17,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     UserDao mUserDao;
+    UserMoneyDao mUserMoneyDao;
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
@@ -63,13 +66,23 @@ public class MainActivity extends AppCompatActivity {
 
 //        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
 //                AppDatabase.class, "database-name").fallbackToDestructiveMigration().build();
-
+    //nuke**
 //        mUserDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
 //                        .allowMainThreadQueries()
 //                                .build()
 //                                        .userDao();
 //
-////        mUserDao.deleteAll();
+//        mUserDao.deleteAll();
+//
+//        mUserMoneyDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
+//                .addMigrations(MIGRATION_2_3)
+//                .allowMainThreadQueries()
+//                .build()
+//                .userMoneyDao();
+//        mUserMoneyDao.deleteAll();
+//
+//        mUserDao.setPredefinedUsers();
+//        mUserMoneyDao.setPredefinedMoney();
 ////        mUserDao.insertAll(user1, user2);
 //        Log.d("testingg", "login user " + mUserDao.getAll().get(0).getUsername());
 ////        db.userDao().insertAll(user1);

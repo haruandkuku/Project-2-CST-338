@@ -24,6 +24,7 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE username = :username")
     User getUserByUsername(String username);
 
-    @Query("SELECT * FROM user WHERE password LIKE :password")
-    User getUserByPassword(String password);
+    @Query("INSERT INTO user (username, password, isAdmin)\n" +
+            "VALUES ('testuser1', 'testuser1', 'false'), ('admin2', 'admin2', 'true')")
+    void setPredefinedUsers();
 }

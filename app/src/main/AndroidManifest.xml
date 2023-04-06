@@ -33,6 +33,9 @@
             android:name=".Admin"
             android:exported="true"/>
         <activity
+            android:name=".EarnMoney"
+            android:exported="true"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
 

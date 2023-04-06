@@ -22,17 +22,30 @@
         tools:visibility="visible" />
 
     <Button
-        android:id="@+id/open_shop"
+        android:id="@+id/earn_button"
         android:layout_width="146dp"
         android:layout_height="50dp"
         android:layout_margin="60dp"
+        android:layout_marginTop="20dp"
+        android:text="Earn money!"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/landing_page_label" />
+
+    <Button
+        android:id="@+id/open_shop"
+        android:layout_width="146dp"
+        android:layout_height="50dp"
+        android:layout_margin="14dp"
         android:layout_marginTop="60dp"
         android:text="Open Shop"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/landing_page_label" />
+        app:layout_constraintTop_toBottomOf="@id/earn_button" />
 
     <Button
         android:id="@+id/order_history"

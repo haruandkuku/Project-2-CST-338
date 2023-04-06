@@ -1,5 +1,7 @@
 package com.example.project2;
 
+import static com.example.project2.AppDatabase.MIGRATION_2_3;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         back_button_login = mLoginPageBinding.backButtonLoginpage;
 
         mUserDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
+                .addMigrations(MIGRATION_2_3)
                 .allowMainThreadQueries()
                 .build()
                 .userDao();
@@ -62,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
                 String username = element_username.getText().toString();
                 String password = element_password.getText().toString();
                 User currentUser;
+                Log.d("testing", "username " + username);
+                currentUser = mUserDao.getUserByUsername(username);
                 try {
                     currentUser = mUserDao.getUserByUsername(username);
                     Log.d("testing", "login password " + password);
