@@ -1,6 +1,7 @@
 package com.example.project2;
 
 import static com.example.project2.AppDatabase.MIGRATION_2_3;
+import static com.example.project2.AppDatabase.MIGRATION_4_5;
 
 import android.content.Context;
 import android.content.Intent;
@@ -42,12 +43,12 @@ public class RegisterPage extends AppCompatActivity {
         register_button = mRegisterPageBinding.registerButton;
         back_button_register = mRegisterPageBinding.backButtonRegisterpage;
         mUserDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
-                .addMigrations(MIGRATION_2_3)
+                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
                 .allowMainThreadQueries()
                 .build()
                 .userDao();
         mUserMoneyDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
-                .addMigrations(MIGRATION_2_3)
+                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
                 .allowMainThreadQueries()
                 .build()
                 .userMoneyDao();

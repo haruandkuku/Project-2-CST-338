@@ -1,6 +1,7 @@
 package com.example.project2;
 
 import static com.example.project2.AppDatabase.MIGRATION_2_3;
+import static com.example.project2.AppDatabase.MIGRATION_4_5;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +24,6 @@ public class EarnMoney extends AppCompatActivity {
     EarnMoneyBinding mEarnMoneyBinding;
     User currentUserEarnMoney;
     UserMoneyDao mUserMoneyDao;
-
     UserMoney currentUserMoney;
 
     @Override
@@ -38,7 +38,7 @@ public class EarnMoney extends AppCompatActivity {
         earn_button = mEarnMoneyBinding.earnButton;
         currentUserEarnMoney = (User) getIntent().getSerializableExtra("currentUser");
         mUserMoneyDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
-                .addMigrations(MIGRATION_2_3)
+                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
                 .allowMainThreadQueries()
                 .build()
                 .userMoneyDao();

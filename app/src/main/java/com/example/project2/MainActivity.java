@@ -1,6 +1,7 @@
 package com.example.project2;
 
 import static com.example.project2.AppDatabase.MIGRATION_2_3;
+import static com.example.project2.AppDatabase.MIGRATION_4_5;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     UserDao mUserDao;
     UserMoneyDao mUserMoneyDao;
+    ItemDao mItemDao;
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
@@ -49,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        mItemDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
+//                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
+//                .allowMainThreadQueries()
+//                .build()
+//                .itemDao();
+//
+//        mItemDao.setPredefinedItems();
+
 
 //        User user1 = new User();
 //        user1.setId(1);
@@ -67,6 +77,16 @@ public class MainActivity extends AppCompatActivity {
 //        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
 //                AppDatabase.class, "database-name").fallbackToDestructiveMigration().build();
     //nuke**
+
+        //        mItemDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
+//                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
+//                .allowMainThreadQueries()
+//                .build()
+//                .itemDao();
+//
+//        mItemDao.setPredefinedItems();
+        //mItemDao.deleteAll();
+
 //        mUserDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
 //                        .allowMainThreadQueries()
 //                                .build()
@@ -75,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 //        mUserDao.deleteAll();
 //
 //        mUserMoneyDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
-//                .addMigrations(MIGRATION_2_3)
+//                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
 //                .allowMainThreadQueries()
 //                .build()
 //                .userMoneyDao();
