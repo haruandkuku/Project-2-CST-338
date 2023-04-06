@@ -28,6 +28,8 @@ public class OpenShop extends AppCompatActivity {
     Spinner itemDropDown;
     OpenShopBinding mOpenShopBinding;
     User currentUserOpenShop;
+    UserMoneyDao mUserMoneyDao;
+    ItemStockDao mItemStockDao;
     ItemDao mItemDao;
 
     @Override
@@ -39,6 +41,7 @@ public class OpenShop extends AppCompatActivity {
         purchase_button = mOpenShopBinding.purchaseButton;
         itemDropDown = mOpenShopBinding.items;
         open_shop_back = mOpenShopBinding.backButtonOpenshop;
+        currentUserOpenShop = (User) getIntent().getSerializableExtra("currentUser");
 
         mItemDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
                 .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
@@ -46,16 +49,28 @@ public class OpenShop extends AppCompatActivity {
                 .build()
                 .itemDao();
 
+        mItemStockDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
+                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
+                .allowMainThreadQueries()
+                .build()
+                .itemStockDao();
+
+        mUserMoneyDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
+                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
+                .allowMainThreadQueries()
+                .build()
+                .userMoneyDao();
+
+        UserMoney currentUserMoney = mUserMoneyDao.getUserMoneyByUserId(currentUserOpenShop.id);
         List<Item> items = mItemDao.getAll();
 
         //setting list<item> to list<string> so we can set it as items inside the dropdown menu
-        List<String> itemsString = items.stream().map(elt ->elt.getName()) .collect(Collectors.toList());
+        List<String> itemsString = items.stream().map(elt -> elt.getName()).collect(Collectors.toList());
         // following this guide I found on internet. I believe items are displayed using array adapter.
         // https://stackoverflow.com/questions/13377361/how-to-create-a-drop-down-list
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString );
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
         itemDropDown.setAdapter(adapter);
 
-        currentUserOpenShop = (User) getIntent().getSerializableExtra("currentUser");
 
         open_shop_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +78,15 @@ public class OpenShop extends AppCompatActivity {
                 Intent intent = LandingPage.getIntent(getApplicationContext());
                 intent.putExtra("currentUser", currentUserOpenShop);
                 startActivity(intent);
+            }
+        });
+
+        purchase_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Item selectedItem = mItemDao.getItemByName(itemDropDown.getSelectedItem().toString());
+                currentUserMoney.setMoneyAmount(currentUserMoney.getMoneyAmount() - selectedItem.getPrice());
+                mUserMoneyDao.updateUserMonies(currentUserMoney);
             }
         });
     }
