@@ -22,18 +22,17 @@
         tools:visibility="visible" />
 
 
-    <EditText
+    <LinearLayout
         android:id="@+id/order_list"
         android:layout_width="215dp"
         android:layout_height="55dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:hint="Order list temporary"
-        android:inputType="textPassword"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/order_history_label" />
+        app:layout_constraintTop_toBottomOf="@id/order_history_label"
+        android:orientation="horizontal" />
 
     <Button
         android:id="@+id/back_button_order_history"

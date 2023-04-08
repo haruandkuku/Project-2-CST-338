@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                 String username = element_username.getText().toString();
                 String password = element_password.getText().toString();
                 User currentUser;
-                Log.d("testing", "username " + username);
                 currentUser = mUserDao.getUserByUsername(username);
                 try {
                     currentUser = mUserDao.getUserByUsername(username);

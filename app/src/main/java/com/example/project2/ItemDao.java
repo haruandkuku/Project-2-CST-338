@@ -24,6 +24,9 @@ public interface ItemDao {
     @Query("SELECT * FROM item WHERE name = :itemName")
     Item getItemByName(String itemName);
 
+    @Query("SELECT * FROM item WHERE id = :itemId")
+    Item getItemById(int itemId);
+
     @Query("SELECT * FROM item WHERE name = :price")
     Item getItemByPrice(int price);
 

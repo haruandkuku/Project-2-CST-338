@@ -51,7 +51,7 @@ public class LandingPage extends AppCompatActivity {
         } else {
             admin_button.setVisibility(View.GONE);
         }
-
+        Log.d("admintest", "adminers " + extras.isAdmin);
         landing_page_label.setText("Welcome " + extras.getUsername());
 
         log_out.setOnClickListener(new View.OnClickListener() {

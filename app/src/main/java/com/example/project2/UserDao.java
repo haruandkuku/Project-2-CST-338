@@ -25,6 +25,6 @@ public interface UserDao {
     User getUserByUsername(String username);
 
     @Query("INSERT INTO user (username, password, isAdmin)\n" +
-            "VALUES ('testuser1', 'testuser1', 'false'), ('admin2', 'admin2', 'true')")
+            "VALUES ('testuser1', 'testuser1', 0), ('admin2', 'admin2', 1)")
     void setPredefinedUsers();
 }
