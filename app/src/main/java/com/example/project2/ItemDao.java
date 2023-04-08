@@ -24,7 +24,10 @@ public interface ItemDao {
     @Query("SELECT * FROM item WHERE name = :itemName")
     Item getItemByName(String itemName);
 
+    @Query("SELECT * FROM item WHERE name = :price")
+    Item getItemByPrice(int price);
+
     @Query("INSERT INTO item (name, description, price)\n" +
-            "VALUES ('Pocket Monster Ball', 'It is a ball for Pocket Monsters', 2)")
+            "VALUES ('Pocket Monster Ball', 'It is a ball for Pocket Monsters', 2) , ('Great Pocket Monster Ball', 'It is a ball for Pocket Monsters that has a higher catch rate than the regular one', 4)")
     void setPredefinedItems();
 }

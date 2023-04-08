@@ -17,9 +17,9 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    UserDao mUserDao;
-    UserMoneyDao mUserMoneyDao;
-    ItemDao mItemDao;
+//    UserDao mUserDao;
+//    UserMoneyDao mUserMoneyDao;
+//    ItemDao mItemDao;
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override

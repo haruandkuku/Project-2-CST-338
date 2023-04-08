@@ -44,7 +44,7 @@ public class EarnMoney extends AppCompatActivity {
                 .userMoneyDao();
         currentUserMoney = mUserMoneyDao.getUserMoneyByUserId(currentUserEarnMoney.id);
 //        mUserMoneyDao.setPredefinedMoney();
-        user_money_display.setText(Integer.toString(currentUserMoney.getMoneyAmount()));
+        user_money_display.setText("$"+ Integer.toString(currentUserMoney.getMoneyAmount()));
         earn_money_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +58,7 @@ public class EarnMoney extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 currentUserMoney.setMoneyAmount(currentUserMoney.getMoneyAmount() + 1);
-                user_money_display.setText(Integer.toString(currentUserMoney.getMoneyAmount()));
+                user_money_display.setText("$" + Integer.toString(currentUserMoney.getMoneyAmount()));
                 mUserMoneyDao.updateUserMonies(currentUserMoney);
             }
         });

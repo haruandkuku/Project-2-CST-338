@@ -20,11 +20,8 @@ public class RegisterPage extends AppCompatActivity {
     EditText element_register_username;
     EditText element_register_password;
     Button register_button;
-
     Button back_button_register;
-
     RegisterPageBinding mRegisterPageBinding;
-
     UserDao mUserDao;
     UserMoneyDao mUserMoneyDao;
 
@@ -42,16 +39,15 @@ public class RegisterPage extends AppCompatActivity {
         element_register_password = mRegisterPageBinding.passwordRegister;
         register_button = mRegisterPageBinding.registerButton;
         back_button_register = mRegisterPageBinding.backButtonRegisterpage;
-        mUserDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
+
+        AppDatabase appDatabase = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
                 .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
                 .allowMainThreadQueries()
-                .build()
-                .userDao();
-        mUserMoneyDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
-                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
-                .allowMainThreadQueries()
-                .build()
-                .userMoneyDao();
+                .build();
+
+
+        mUserDao = appDatabase .userDao();
+        mUserMoneyDao =  appDatabase .userMoneyDao();
         back_button_register.setOnClickListener(new View.OnClickListener() { //goes back to main activity
             @Override
             public void onClick(View v) {
@@ -62,7 +58,7 @@ public class RegisterPage extends AppCompatActivity {
 
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //process of adding user
                 String username = element_register_username.getText().toString();
                 String password = element_register_password.getText().toString();
                 UserMoney newUserMoney = new UserMoney();
