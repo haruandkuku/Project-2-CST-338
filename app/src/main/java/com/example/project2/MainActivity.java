@@ -17,9 +17,9 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-//    UserDao mUserDao;
-//    UserMoneyDao mUserMoneyDao;
-//    ItemDao mItemDao;
+    UserDao mUserDao;
+    UserMoneyDao mUserMoneyDao;
+    ItemDao mItemDao;
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
@@ -51,32 +51,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        mItemDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
-//                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
-//                .allowMainThreadQueries()
-//                .build()
-//                .itemDao();
-//
-//        mItemDao.setPredefinedItems();
+
+        AppDatabase appDatabase = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
+                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
+                .allowMainThreadQueries()
+                .build();
+
+        mUserDao = appDatabase.userDao();
+        mItemDao = appDatabase.itemDao();
+        mUserMoneyDao = appDatabase.userMoneyDao();
 
 
-//        User user1 = new User();
-//        user1.setId(1);
-//        user1.setUsername("testuser1");
-//        user1.setPassword("testuser1");
-//        user1.setAdmin(false);
-//        Log.d("testingg", "login user " + user1.getUsername());
-//
-//        User user2 = new User();
-//        user2.setId(2);
-//        user2.setUsername("admin2");
-//        user2.setPassword("admin2");
-//        user2.setAdmin(true);
+        if(mUserDao.getUserByUsername("admin2") == null){
+            mUserDao.setPredefinedUsers();
+        }
+        if(mUserMoneyDao.getUserMoneyByUserId(1) == null){
+            mUserMoneyDao.setPredefinedMoney();
+        }
+        if(mItemDao.getItemByName("Pocket Monster Ball") == null){
+            mItemDao.setPredefinedItems();
+        }
+
 
 
 //        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
 //                AppDatabase.class, "database-name").fallbackToDestructiveMigration().build();
-    //nuke**
+        //nuke**
 
         //        mItemDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
 //                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 //                        .allowMainThreadQueries()
 //                                .build()
 //                                        .userDao();
-//
+
 //        mUserDao.deleteAll();
 //
 //        mUserMoneyDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static Intent getIntent(Context context){
+    public static Intent getIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         return intent;
     }
