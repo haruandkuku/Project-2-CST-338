@@ -22,7 +22,6 @@ public class OrderHistory extends AppCompatActivity {
 
     Button order_history_back;
     OrderHistoryBinding mOrderHistoryBinding;
-
     LinearLayout order_history_list;
     User currentUserOrderHistory;
     ItemStockDao mItemStockDao;
@@ -51,7 +50,7 @@ public class OrderHistory extends AppCompatActivity {
             Item item = mItemDao.getItemById(itemStock.itemId); // this is to show name
             TextView textView = new TextView(this);
             textView.setTextSize(15);
-            textView.setText(item.name + ": " +itemStock.quantity);
+            textView.setText(item.name + ":  " + "x" + itemStock.quantity);
             order_history_list.addView(textView);
         });
 

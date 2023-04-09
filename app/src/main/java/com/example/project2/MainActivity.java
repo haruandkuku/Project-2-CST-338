@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     UserMoneyDao mUserMoneyDao;
     ItemDao mItemDao;
 
+    ItemStockDao mItemStockDao;
+
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
@@ -60,7 +62,13 @@ public class MainActivity extends AppCompatActivity {
         mUserDao = appDatabase.userDao();
         mItemDao = appDatabase.itemDao();
         mUserMoneyDao = appDatabase.userMoneyDao();
+        mItemStockDao = appDatabase.itemStockDao();
 
+        // the nuke
+//        mItemDao.deleteAll();
+//        mUserMoneyDao.deleteAll();
+//        mUserDao.deleteAll();
+//        mItemStockDao.deleteAll();
 
         if(mUserDao.getUserByUsername("admin2") == null){
             mUserDao.setPredefinedUsers();

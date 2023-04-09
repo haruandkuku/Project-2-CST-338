@@ -27,4 +27,5 @@ public interface UserDao {
     @Query("INSERT INTO user (username, password, isAdmin)\n" +
             "VALUES ('testuser1', 'testuser1', 0), ('admin2', 'admin2', 1)")
     void setPredefinedUsers();
+    //test
 }

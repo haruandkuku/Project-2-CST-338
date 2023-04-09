@@ -25,7 +25,6 @@ public class LandingPage extends AppCompatActivity {
     Button admin_button;
     Button log_out;
     TextView landing_page_label;
-
     Button earn_money;
     User extras;
 

@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project2.databinding.AdminAddItemBinding;
 import com.example.project2.databinding.AdminPageBinding;
 
 public class Admin extends AppCompatActivity {
@@ -32,6 +33,14 @@ public class Admin extends AppCompatActivity {
         back_button_admin = mAdminPageBinding.backButtonAdmin;
         currentUserAdmin = (User) getIntent().getSerializableExtra("currentUser");
 
+        add_item_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AdminAddItem.getIntent(getApplicationContext());
+                intent.putExtra("currentUser", currentUserAdmin);
+                startActivity(intent);
+            }
+        });
         back_button_admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +51,7 @@ public class Admin extends AppCompatActivity {
         });
     }
 
-    public static Intent getIntent(Context context){
+    public static Intent getIntent(Context context) {
         Intent intent = new Intent(context, Admin.class);
         return intent;
     }
