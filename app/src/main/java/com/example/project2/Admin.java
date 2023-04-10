@@ -33,6 +33,22 @@ public class Admin extends AppCompatActivity {
         back_button_admin = mAdminPageBinding.backButtonAdmin;
         currentUserAdmin = (User) getIntent().getSerializableExtra("currentUser");
 
+        delete_user_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AdminDeleteUser.getIntent(getApplicationContext());
+                intent.putExtra("currentUser", currentUserAdmin);
+                startActivity(intent);
+            }
+        });
+        delete_item_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AdminDeleteItem.getIntent(getApplicationContext());
+                intent.putExtra("currentUser", currentUserAdmin);
+                startActivity(intent);
+            }
+        });
         add_item_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

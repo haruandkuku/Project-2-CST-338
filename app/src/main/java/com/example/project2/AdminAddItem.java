@@ -20,7 +20,7 @@ import com.example.project2.databinding.AdminAddItemBinding;
 public class AdminAddItem extends AppCompatActivity {
 
     Button add_item_button;
-    Button back_button_adminadd;
+    Button back_button_admin_add;
     AdminAddItemBinding mAdminAddItemBinding;
     EditText item_name;
     EditText item_description;
@@ -38,7 +38,7 @@ public class AdminAddItem extends AppCompatActivity {
         setContentView(view);
 
         add_item_button = mAdminAddItemBinding.addItemButton;
-        back_button_adminadd = mAdminAddItemBinding.backButtonAdminadd;
+        back_button_admin_add = mAdminAddItemBinding.backButtonAdminAdd;
         item_name = mAdminAddItemBinding.itemName;
         item_description = mAdminAddItemBinding.itemDescription;
         item_price = mAdminAddItemBinding.itemPrice;
@@ -69,7 +69,7 @@ public class AdminAddItem extends AppCompatActivity {
             }
         });
 
-        back_button_adminadd.setOnClickListener(new View.OnClickListener() {
+        back_button_admin_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = Admin.getIntent(getApplicationContext());

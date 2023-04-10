@@ -39,6 +39,12 @@
             android:name=".AdminAddItem"
             android:exported="true"/>
         <activity
+            android:name=".AdminDeleteItem"
+            android:exported="true"/>
+        <activity
+            android:name=".AdminDeleteUser"
+            android:exported="true"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
 
