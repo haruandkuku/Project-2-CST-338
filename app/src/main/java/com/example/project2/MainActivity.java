@@ -13,7 +13,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,22 +68,21 @@ public class MainActivity extends AppCompatActivity {
         mUserMoneyDao = appDatabase.userMoneyDao();
         mItemStockDao = appDatabase.itemStockDao();
 
-        // the nuke
+//         the nuke
 //        mItemDao.deleteAll();
 //        mUserMoneyDao.deleteAll();
 //        mUserDao.deleteAll();
 //        mItemStockDao.deleteAll();
 
-        if(mUserDao.getUserByUsername("admin2") == null){
+        if (mUserDao.getUserByUsername("admin2") == null) {
             mUserDao.setPredefinedUsers();
         }
-        if(mUserMoneyDao.getUserMoneyByUserId(1) == null){
+        if (mUserMoneyDao.getUserMoneyByUserId(1) == null) {
             mUserMoneyDao.setPredefinedMoney();
         }
-        if(mItemDao.getItemByName("Pocket Monster Ball") == null){
+        if (mItemDao.getItemByName("Pocket Monster Ball") == null) {
             mItemDao.setPredefinedItems();
         }
-
 
 
 //        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
@@ -115,6 +118,20 @@ public class MainActivity extends AppCompatActivity {
 //        Log.d("testingg", "login user " + mUserDao.getAll().get(0).getUsername());
 ////        db.userDao().insertAll(user1);
 //        Log.d("testing", "inserted user " + mUserDao.getAll());
+
+
+//        try{
+//            if(item.name == null || Integer.toString(itemStock.quantity) == null){
+//                mItemDao.delete(item);
+//                mItemStockDao.delete(itemStock);
+//            } else{
+//                List<String> itemsString = items.stream().map(elt -> Integer.toString(elt.getQuantity()) + " " + item.getName()).collect(Collectors.toList());
+//                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
+//                cancel_list.setAdapter(adapter);
+//            }
+//        } catch(NullPointerException e){
+//
+//        }
     }
 
 

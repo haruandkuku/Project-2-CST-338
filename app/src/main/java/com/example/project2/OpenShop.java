@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -36,6 +37,7 @@ public class OpenShop extends AppCompatActivity {
     UserMoneyDao mUserMoneyDao;
     ItemStockDao mItemStockDao;
     ItemDao mItemDao;
+    String errorMessage = "You don't have enough money.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +57,16 @@ public class OpenShop extends AppCompatActivity {
                 .build();
 
 
-        mItemDao = appDatabase .itemDao();
-        mItemStockDao = appDatabase .itemStockDao();
-        mUserMoneyDao =  appDatabase .userMoneyDao();
+        mItemDao = appDatabase.itemDao();
+        mItemStockDao = appDatabase.itemStockDao();
+        mUserMoneyDao = appDatabase.userMoneyDao();
 
         UserMoney currentUserMoney = mUserMoneyDao.getUserMoneyByUserId(currentUserOpenShop.id);
-        money_display.setText("$"+ Integer.toString(currentUserMoney.getMoneyAmount())); // display money
+        money_display.setText("$" + Integer.toString(currentUserMoney.getMoneyAmount())); // display money
         List<Item> items = mItemDao.getAll();
 
         //setting list<item> to list<string> so we can set it as items inside the dropdown menu
-        List<String> itemsString = items.stream().map(elt -> elt.getName() + ": " + elt.getPrice()).collect(Collectors.toList());
+        List<String> itemsString = items.stream().map(elt -> elt.getName() + ": $" + elt.getPrice()).collect(Collectors.toList());
         // following this guide I found on internet. I believe items are displayed using array adapter.
         // https://stackoverflow.com/questions/13377361/how-to-create-a-drop-down-list
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
@@ -86,8 +88,10 @@ public class OpenShop extends AppCompatActivity {
 
                 Item selectedItem = mItemDao.getItemByName(itemDropDown.getSelectedItem().toString().split(":", 2)[0]);
 
-
-
+                if(currentUserMoney.getMoneyAmount() < selectedItem.getPrice()){
+                    Toast toast = Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
+                    toast.show();
+                } else{
                 LiveData<ItemStock> liveDataStockedItem = mItemStockDao.getItemStockByUserIdAndItemId(currentUserOpenShop.id, selectedItem.id);
                 liveDataStockedItem.observe(x, new Observer<ItemStock>() {
                     @Override
@@ -110,7 +114,8 @@ public class OpenShop extends AppCompatActivity {
                 });
                 currentUserMoney.setMoneyAmount(currentUserMoney.getMoneyAmount() - selectedItem.getPrice());
                 mUserMoneyDao.updateUserMonies(currentUserMoney);
-                money_display.setText("$"+ Integer.toString(currentUserMoney.getMoneyAmount()));
+                money_display.setText("$" + Integer.toString(currentUserMoney.getMoneyAmount()));
+            }
             }
         });
     }

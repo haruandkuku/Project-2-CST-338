@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
@@ -91,7 +92,9 @@ public class AdminDeleteUser extends AppCompatActivity {
 //                ItemStock selectedUserItems = mItemStockDao.getItemStockByUserId(selectedUser.getId());
                 List<ItemStock> selectedUserItem = mItemStockDao.getItemStockByUserId(selectedUser.getId());
                 mUserDao.delete(selectedUser);
-                mUserMoneyDao.delete(selectedUserMoney);
+                if(!(mUserMoneyDao == null)) {
+                    mUserMoneyDao.delete(selectedUserMoney);
+                }
 //                mItemStockDao.delete(selectedUserItem);
                 Toast toast = Toast.makeText(getApplicationContext(), userTerminated, Toast.LENGTH_SHORT);
                 toast.show();

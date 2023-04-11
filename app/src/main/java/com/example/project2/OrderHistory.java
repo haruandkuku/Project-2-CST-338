@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,13 +18,14 @@ import androidx.room.Room;
 
 import com.example.project2.databinding.OrderHistoryBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderHistory extends AppCompatActivity {
 
     Button order_history_back;
     OrderHistoryBinding mOrderHistoryBinding;
-    LinearLayout order_history_list;
+    ListView order_history_list;
     User currentUserOrderHistory;
     ItemStockDao mItemStockDao;
     ItemDao mItemDao;
@@ -43,17 +46,21 @@ public class OrderHistory extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
 
-        mItemStockDao = appDatabase .itemStockDao();
-        mItemDao = appDatabase .itemDao();
+        mItemStockDao = appDatabase.itemStockDao();
+        mItemDao = appDatabase.itemDao();
+        ArrayList<String> listData = new ArrayList<>();
         List<ItemStock> listItemStock = mItemStockDao.getItemStockByUserId(currentUserOrderHistory.getId());
-        listItemStock.forEach( (itemStock) -> {
+        listItemStock.forEach((itemStock) -> {
             Item item = mItemDao.getItemById(itemStock.itemId); // this is to show name
-            TextView textView = new TextView(this);
-            textView.setTextSize(15);
-            textView.setText(item.name + ":  " + "x" + itemStock.quantity);
-            order_history_list.addView(textView);
+            String itemString = item.name + ": " + "x" + itemStock.quantity;
+            listData.add(itemString);
+//            TextView textView = new TextView(this);
+//            textView.setTextSize(10);
+//            textView.setText(item.name + ":  " + "x" + itemStock.quantity);
+//            order_history_list.addView(textView);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listData);
+            order_history_list.setAdapter(adapter);
         });
-
 
 
         order_history_back.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +72,8 @@ public class OrderHistory extends AppCompatActivity {
             }
         });
     }
-    public static Intent getIntent(Context context){
+
+    public static Intent getIntent(Context context) {
         Intent intent = new Intent(context, OrderHistory.class);
         return intent;
     }

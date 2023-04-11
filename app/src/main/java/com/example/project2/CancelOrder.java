@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -27,12 +28,11 @@ public class CancelOrder extends AppCompatActivity {
     Button cancel_button;
     CancelOrderBinding mCancelOrderBinding;
     User currentUserCancelOrder;
-
     UserMoneyDao mUserMoneyDao;
-
     ItemStockDao mItemStockDao;
-
     ItemDao mItemDao;
+    String itemCancelled = "Item has been cancelled!";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,15 +50,32 @@ public class CancelOrder extends AppCompatActivity {
                 .build();
 
 
-        mItemDao = appDatabase .itemDao();
-        mItemStockDao = appDatabase .itemStockDao();
-        mUserMoneyDao =  appDatabase .userMoneyDao();
+        mItemDao = appDatabase.itemDao();
+        mItemStockDao = appDatabase.itemStockDao();
+        mUserMoneyDao = appDatabase.userMoneyDao();
 
-//        List<ItemStock> items = mItemStockDao.getItemStockByUserIdAndItemId(currentUserCancelOrder.getId(), 1));
-//        List<String> itemsString = items.stream().map(elt -> elt.getName() + ": " + elt.getPrice()).collect(Collectors.toList());
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
-//        cancel_list.setAdapter(adapter);
+        List<ItemStock> items = mItemStockDao.getItemStockByUserId(currentUserCancelOrder.getId());
+        items.forEach((itemStock) -> {
+            Item item = mItemDao.getItemById(itemStock.itemId); // this is to show name
+            List<String> itemsString = items.stream().map(elt -> Integer.toString(elt.getQuantity()) + " " + item.getName()).collect(Collectors.toList());
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
+            cancel_list.setAdapter(adapter);
+            }
+        );
 
+
+        ItemStock selectedItem = mItemStockDao.getItemStockByUserID(currentUserCancelOrder.getId());
+        cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mItemStockDao.delete(selectedItem);
+                Toast toast = Toast.makeText(getApplicationContext(), itemCancelled, Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = LandingPage.getIntent(getApplicationContext());
+                intent.putExtra("currentUser", currentUserCancelOrder);
+                startActivity(intent);
+            }
+        });
 
         cancel_order_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +87,7 @@ public class CancelOrder extends AppCompatActivity {
         });
     }
 
-    public static Intent getIntent(Context context){
+    public static Intent getIntent(Context context) {
         Intent intent = new Intent(context, CancelOrder.class);
         return intent;
     }

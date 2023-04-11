@@ -23,9 +23,17 @@ public interface ItemStockDao {
     @Query("SELECT * FROM item_stock WHERE user_id = :userId")
     List<ItemStock> getItemStockByUserId(int userId);
 
+    @Query("SELECT * FROM item_stock WHERE user_id = :userId")
+    ItemStock getItemStockByUserID(int userId);
+
+    @Query("SELECT * FROM item_stock WHERE item_id = :itemId")
+    ItemStock getItemStockByItemID(int itemId);
 
     @Query("SELECT * FROM item_stock WHERE user_id = :userId AND item_id = :itemId")
     LiveData<ItemStock> getItemStockByUserIdAndItemId(int userId, int itemId);
+
+    @Query("SELECT * FROM item_stock WHERE user_id = :userId AND item_id = :itemId")
+    List<ItemStock> getItemStockByUserIDAndItemID(int userId, int itemId);
 
     @Update
     void updateItemStock(ItemStock... itemStocks);

@@ -66,6 +66,9 @@ public class AdminAddItem extends AppCompatActivity {
                 mItemDao.insertAll(newItem);
                 Toast toast = Toast.makeText(getApplicationContext(), itemAdded, Toast.LENGTH_SHORT);
                 toast.show();
+                Intent intent = Admin.getIntent(getApplicationContext());
+                intent.putExtra("currentUser", currentUserAdmin);
+                startActivity(intent);
             }
         });
 
