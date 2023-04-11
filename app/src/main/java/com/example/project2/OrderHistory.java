@@ -52,7 +52,7 @@ public class OrderHistory extends AppCompatActivity {
         List<ItemStock> listItemStock = mItemStockDao.getItemStockByUserId(currentUserOrderHistory.getId());
         listItemStock.forEach((itemStock) -> {
             Item item = mItemDao.getItemById(itemStock.itemId); // this is to show name
-            String itemString = item.name + ": " + "x" + itemStock.quantity;
+            String itemString = item.name + " x" + itemStock.quantity + "\n\n" + item.description + "\n";
             listData.add(itemString);
 //            TextView textView = new TextView(this);
 //            textView.setTextSize(10);

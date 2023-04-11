@@ -3,6 +3,8 @@ package com.example.project2;
 import static com.example.project2.AppDatabase.MIGRATION_2_3;
 import static com.example.project2.AppDatabase.MIGRATION_4_5;
 
+import static java.lang.Integer.parseInt;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import androidx.room.Room;
 
 import com.example.project2.databinding.CancelOrderBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,19 +58,28 @@ public class CancelOrder extends AppCompatActivity {
         mUserMoneyDao = appDatabase.userMoneyDao();
 
         List<ItemStock> items = mItemStockDao.getItemStockByUserId(currentUserCancelOrder.getId());
+        List<String> itemsString = new ArrayList<>();
         items.forEach((itemStock) -> {
             Item item = mItemDao.getItemById(itemStock.itemId); // this is to show name
-            List<String> itemsString = items.stream().map(elt -> Integer.toString(elt.getQuantity()) + " " + item.getName()).collect(Collectors.toList());
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
-            cancel_list.setAdapter(adapter);
+            String itemString = item.getName() + " x" + itemStock.getQuantity();
+            itemsString.add(itemString);
             }
         );
-
-
-        ItemStock selectedItem = mItemStockDao.getItemStockByUserID(currentUserCancelOrder.getId());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
+        cancel_list.setAdapter(adapter);
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String selectedItemString = (String) cancel_list.getSelectedItem();
+                ItemStock selectedItem = null;
+                for(ItemStock itemStock : items){
+                    Item item = mItemDao.getItemById(itemStock.itemId);
+                    String itemString = item.getName() + " x" + itemStock.getQuantity();
+                    if (itemString.equals(selectedItemString)) {
+                        selectedItem = itemStock;
+                        break;
+                    }
+                }
                 mItemStockDao.delete(selectedItem);
                 Toast toast = Toast.makeText(getApplicationContext(), itemCancelled, Toast.LENGTH_SHORT);
                 toast.show();
