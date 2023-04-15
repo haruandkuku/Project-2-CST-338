@@ -77,14 +77,6 @@ public class LandingPage extends AppCompatActivity {
                 alert11.show();
             }
         });
-//        log_out.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = MainActivity.getIntent(getApplicationContext());
-//                startActivity(intent);
-//            }
-//        });
-
         earn_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -17,6 +17,7 @@ public class Admin extends AppCompatActivity {
     Button delete_item_button;
     Button delete_user_button;
     Button back_button_admin;
+    Button set_money_button;
     AdminPageBinding mAdminPageBinding;
     User currentUserAdmin;
 
@@ -31,6 +32,7 @@ public class Admin extends AppCompatActivity {
         delete_item_button = mAdminPageBinding.deleteItemButton;
         delete_user_button = mAdminPageBinding.deleteUserButton;
         back_button_admin = mAdminPageBinding.backButtonAdmin;
+        set_money_button = mAdminPageBinding.setUserMoneyButton;
         currentUserAdmin = (User) getIntent().getSerializableExtra("currentUser");
 
         delete_user_button.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +55,14 @@ public class Admin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = AdminAddItem.getIntent(getApplicationContext());
+                intent.putExtra("currentUser", currentUserAdmin);
+                startActivity(intent);
+            }
+        });
+        set_money_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AdminSetMoney.getIntent(getApplicationContext());
                 intent.putExtra("currentUser", currentUserAdmin);
                 startActivity(intent);
             }

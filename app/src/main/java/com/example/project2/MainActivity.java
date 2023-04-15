@@ -3,6 +3,7 @@ package com.example.project2;
 import static com.example.project2.AppDatabase.MIGRATION_2_3;
 import static com.example.project2.AppDatabase.MIGRATION_4_5;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 import androidx.room.migration.Migration;
@@ -24,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     UserDao mUserDao;
     UserMoneyDao mUserMoneyDao;
     ItemDao mItemDao;
-
     ItemStockDao mItemStockDao;
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         mUserMoneyDao = appDatabase.userMoneyDao();
         mItemStockDao = appDatabase.itemStockDao();
 
-//         the nuke
+//        database nuke
 //        mItemDao.deleteAll();
 //        mUserMoneyDao.deleteAll();
 //        mUserDao.deleteAll();
@@ -83,55 +83,6 @@ public class MainActivity extends AppCompatActivity {
         if (mItemDao.getItemByName("Pocket Monster Ball") == null) {
             mItemDao.setPredefinedItems();
         }
-
-
-//        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-//                AppDatabase.class, "database-name").fallbackToDestructiveMigration().build();
-        //nuke**
-
-        //        mItemDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
-//                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
-//                .allowMainThreadQueries()
-//                .build()
-//                .itemDao();
-//
-//        mItemDao.setPredefinedItems();
-        //mItemDao.deleteAll();
-
-//        mUserDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
-//                        .allowMainThreadQueries()
-//                                .build()
-//                                        .userDao();
-
-//        mUserDao.deleteAll();
-//
-//        mUserMoneyDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
-//                .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
-//                .allowMainThreadQueries()
-//                .build()
-//                .userMoneyDao();
-//        mUserMoneyDao.deleteAll();
-//
-//        mUserDao.setPredefinedUsers();
-//        mUserMoneyDao.setPredefinedMoney();
-////        mUserDao.insertAll(user1, user2);
-//        Log.d("testingg", "login user " + mUserDao.getAll().get(0).getUsername());
-////        db.userDao().insertAll(user1);
-//        Log.d("testing", "inserted user " + mUserDao.getAll());
-
-
-//        try{
-//            if(item.name == null || Integer.toString(itemStock.quantity) == null){
-//                mItemDao.delete(item);
-//                mItemStockDao.delete(itemStock);
-//            } else{
-//                List<String> itemsString = items.stream().map(elt -> Integer.toString(elt.getQuantity()) + " " + item.getName()).collect(Collectors.toList());
-//                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
-//                cancel_list.setAdapter(adapter);
-//            }
-//        } catch(NullPointerException e){
-//
-//        }
     }
 
 

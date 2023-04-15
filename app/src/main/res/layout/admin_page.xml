@@ -61,6 +61,19 @@
         app:layout_constraintTop_toBottomOf="@id/delete_item_button" />
 
     <Button
+        android:id="@+id/set_user_money_button"
+        android:layout_width="146dp"
+        android:layout_height="50dp"
+        android:layout_margin="6dp"
+        android:layout_marginTop="212dp"
+        android:text="Set User Money"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/delete_user_button" />
+
+    <Button
         android:id="@+id/back_button_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

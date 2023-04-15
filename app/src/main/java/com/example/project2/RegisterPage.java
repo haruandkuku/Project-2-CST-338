@@ -3,16 +3,17 @@ package com.example.project2;
 import static com.example.project2.AppDatabase.MIGRATION_2_3;
 import static com.example.project2.AppDatabase.MIGRATION_4_5;
 
+
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
-
 import com.example.project2.databinding.RegisterPageBinding;
 
 
@@ -61,17 +62,40 @@ public class RegisterPage extends AppCompatActivity {
             public void onClick(View v) { //process of adding user
                 String username = element_register_username.getText().toString();
                 String password = element_register_password.getText().toString();
-                UserMoney newUserMoney = new UserMoney();
-                User newUser = new User();
-                newUser.setUsername(username);
-                newUser.setPassword(password);
-                newUser.setAdmin(false);
-                mUserDao.insertAll(newUser);
-                newUserMoney.setUserId(mUserDao.getUserByUsername(username).getId());
-                newUserMoney.setMoneyAmount(0);
-                mUserMoneyDao.insertAll(newUserMoney);
-                Intent intent = LoginActivity.getIntent(getApplicationContext());
-                startActivity(intent);
+                if (mUserDao.getUserByUsername(username) != null) {
+                    // Show a toast message indicating that the username already exists
+                    Toast.makeText(getApplicationContext(), "Username already exists!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Create a new User and UserMoney entities and insert them into the database
+                    UserMoney newUserMoney = new UserMoney();
+                    User newUser = new User();
+                    newUser.setUsername(username);
+                    newUser.setPassword(password);
+                    newUser.setAdmin(false);
+                    mUserDao.insertAll(newUser);
+                    newUserMoney.setUserId(mUserDao.getUserByUsername(username).getId());
+                    newUserMoney.setMoneyAmount(0);
+                    mUserMoneyDao.insertAll(newUserMoney);
+                    Intent intent = LoginActivity.getIntent(getApplicationContext());
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "Username successfully created!", Toast.LENGTH_SHORT).show();
+                }
+//                try {
+//                    UserMoney newUserMoney = new UserMoney();
+//                    User newUser = new User();
+//                    newUser.setUsername(username);
+//                    newUser.setPassword(password);
+//                    newUser.setAdmin(false);
+//                    mUserDao.insertAll(newUser);
+//                    newUserMoney.setUserId(mUserDao.getUserByUsername(username).getId());
+//                    newUserMoney.setMoneyAmount(0);
+//                    mUserMoneyDao.insertAll(newUserMoney);
+//                    Intent intent = LoginActivity.getIntent(getApplicationContext());
+//                    startActivity(intent);
+//                } catch (SQLiteConstraintException e) {
+//                    // Show a toast message indicating that the username already exists
+//                    Toast.makeText(getApplicationContext(), "Username already exists!", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 

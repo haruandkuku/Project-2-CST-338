@@ -20,6 +20,9 @@ public interface ItemStockDao {
     @Query("DELETE FROM item_stock")
     void deleteAll();
 
+    @Query("DELETE FROM item_stock WHERE user_id = :userId")
+    int deleteItemStockByUserID(int userId);
+
     @Query("SELECT * FROM item_stock WHERE user_id = :userId")
     List<ItemStock> getItemStockByUserId(int userId);
 

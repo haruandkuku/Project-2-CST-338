@@ -13,7 +13,7 @@ public class Item implements Serializable {
     public int id;
 
     @NonNull
-    @ColumnInfo(name = "name") //might need change
+    @ColumnInfo(name = "name")
     public String name;
     @NonNull
     @ColumnInfo(name = "description")

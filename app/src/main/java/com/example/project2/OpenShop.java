@@ -3,6 +3,7 @@ package com.example.project2;
 import static com.example.project2.AppDatabase.MIGRATION_2_3;
 import static com.example.project2.AppDatabase.MIGRATION_4_5;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -115,6 +116,8 @@ public class OpenShop extends AppCompatActivity {
                 currentUserMoney.setMoneyAmount(currentUserMoney.getMoneyAmount() - selectedItem.getPrice());
                 mUserMoneyDao.updateUserMonies(currentUserMoney);
                 money_display.setText("$" + Integer.toString(currentUserMoney.getMoneyAmount()));
+                Toast toast = Toast.makeText(getApplicationContext(), selectedItem.getName() + " successfully purchased!", Toast.LENGTH_SHORT);
+                toast.show();
             }
             }
         });

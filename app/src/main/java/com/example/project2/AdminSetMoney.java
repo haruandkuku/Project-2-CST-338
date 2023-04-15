@@ -3,11 +3,11 @@ package com.example.project2;
 import static com.example.project2.AppDatabase.MIGRATION_2_3;
 import static com.example.project2.AppDatabase.MIGRATION_4_5;
 
+import static java.lang.Integer.parseInt;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,42 +16,39 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.room.Room;
 
-import com.example.project2.databinding.AdminDeleteUserBinding;
+import com.example.project2.databinding.AdminSetMoneyBinding;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AdminDeleteUser extends AppCompatActivity {
+public class AdminSetMoney extends AppCompatActivity {
 
-    Button delete_button;
-    Button delete_button_back;
-    Spinner user_delete_list;
-    TextView money_display;
-    AdminDeleteUserBinding mAdminDeleteUserBinding;
-    User currentUserAdminDelete;
+    Button set_money;
+    Button admin_set_money_back;
+    Spinner user_select_add_money;
+    EditText set_money_amount;
+    AdminSetMoneyBinding mAdminSetMoneyBinding;
+    User currentUserAdminSetMoney;
     UserMoneyDao mUserMoneyDao;
     ItemStockDao mItemStockDao;
     ItemDao mItemDao;
     UserDao mUserDao;
-    String userTerminated = "User has been successfully terminated.";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdminDeleteUserBinding = AdminDeleteUserBinding.inflate(getLayoutInflater());
-        View view = mAdminDeleteUserBinding.getRoot();
+        mAdminSetMoneyBinding = AdminSetMoneyBinding.inflate(getLayoutInflater());
+        View view = mAdminSetMoneyBinding.getRoot();
         setContentView(view);
-        delete_button = mAdminDeleteUserBinding.deleteUserButton;
-        user_delete_list = mAdminDeleteUserBinding.deleteUserList;
-        delete_button_back = mAdminDeleteUserBinding.backButtonDeleteUser;
-        currentUserAdminDelete = (User) getIntent().getSerializableExtra("currentUser");
+        set_money = mAdminSetMoneyBinding.setMoney;
+        user_select_add_money = mAdminSetMoneyBinding.addMoneyUserList;
+        admin_set_money_back = mAdminSetMoneyBinding.backButtonAdminSetMoney;
+        set_money_amount = mAdminSetMoneyBinding.setMoneyAmount;
+        currentUserAdminSetMoney = (User) getIntent().getSerializableExtra("currentUser");
 
         AppDatabase appDatabase = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DATABASE_NAME)
                 .addMigrations(MIGRATION_2_3, MIGRATION_4_5)
@@ -64,7 +61,6 @@ public class AdminDeleteUser extends AppCompatActivity {
         mUserMoneyDao =  appDatabase .userMoneyDao();
         mUserDao =  appDatabase .userDao();
 
-        List<Item> items = mItemDao.getAll();
         List<User> users = mUserDao.getAll();
 
         //setting list<item> to list<string> so we can set it as items inside the dropdown menu
@@ -72,41 +68,37 @@ public class AdminDeleteUser extends AppCompatActivity {
         // following this guide I found on internet. I believe items are displayed using array adapter.
         // https://stackoverflow.com/questions/13377361/how-to-create-a-drop-down-list
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, usersString);
-        user_delete_list.setAdapter(adapter);
+        user_select_add_money.setAdapter(adapter);
 
 
-        delete_button_back.setOnClickListener(new View.OnClickListener() {
+        admin_set_money_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = Admin.getIntent(getApplicationContext());
-                intent.putExtra("currentUser", currentUserAdminDelete);
+                intent.putExtra("currentUser", currentUserAdminSetMoney);
                 startActivity(intent);
             }
         });
-        delete_button.setOnClickListener(new View.OnClickListener() {
+        set_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User selectedUser = mUserDao.getUserByUsername(user_delete_list.getSelectedItem().toString());
+                User selectedUser = mUserDao.getUserByUsername(user_select_add_money.getSelectedItem().toString());
                 UserMoney selectedUserMoney = mUserMoneyDao.getUserMoneyByUserId(selectedUser.getId());
-                int selectedUserItem = mItemStockDao.deleteItemStockByUserID(selectedUser.getId());
-                mUserDao.delete(selectedUser);
-                if(!(mUserMoneyDao == null)) {
-                    mUserMoneyDao.delete(selectedUserMoney);
-                }
-                if(!(mItemStockDao == null)){
-                    mItemStockDao.deleteItemStockByUserID(selectedUserItem);
-                }
-                Toast toast = Toast.makeText(getApplicationContext(), userTerminated, Toast.LENGTH_SHORT);
+                String moneyAmountString = set_money_amount.getText().toString();
+                int moneyAmount = Integer.parseInt(moneyAmountString);
+                selectedUserMoney.setMoneyAmount(moneyAmount);
+                mUserMoneyDao.updateUserMonies(selectedUserMoney);
+                Toast toast = Toast.makeText(getApplicationContext(), selectedUser.getUsername() + "'s money successfully set!", Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent = Admin.getIntent(getApplicationContext());
-                intent.putExtra("currentUser", currentUserAdminDelete);
+                intent.putExtra("currentUser", currentUserAdminSetMoney);
                 startActivity(intent);
             }
         });
     }
 
     public static Intent getIntent(Context context) {
-        Intent intent = new Intent(context, AdminDeleteUser.class);
+        Intent intent = new Intent(context, AdminSetMoney.class);
         return intent;
     }
 }

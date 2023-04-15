@@ -54,10 +54,6 @@ public class OrderHistory extends AppCompatActivity {
             Item item = mItemDao.getItemById(itemStock.itemId); // this is to show name
             String itemString = item.name + " x" + itemStock.quantity + "\n\n" + item.description + "\n";
             listData.add(itemString);
-//            TextView textView = new TextView(this);
-//            textView.setTextSize(10);
-//            textView.setText(item.name + ":  " + "x" + itemStock.quantity);
-//            order_history_list.addView(textView);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listData);
             order_history_list.setAdapter(adapter);
         });

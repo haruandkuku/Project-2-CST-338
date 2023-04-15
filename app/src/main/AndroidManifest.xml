@@ -45,6 +45,9 @@
             android:name=".AdminDeleteUser"
             android:exported="true"/>
         <activity
+            android:name=".AdminSetMoney"
+            android:exported="true"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
 

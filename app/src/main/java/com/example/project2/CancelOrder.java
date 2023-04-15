@@ -3,6 +3,7 @@ package com.example.project2;
 import static com.example.project2.AppDatabase.MIGRATION_2_3;
 import static com.example.project2.AppDatabase.MIGRATION_4_5;
 
+
 import static java.lang.Integer.parseInt;
 
 import android.content.Context;
@@ -60,10 +61,10 @@ public class CancelOrder extends AppCompatActivity {
         List<ItemStock> items = mItemStockDao.getItemStockByUserId(currentUserCancelOrder.getId());
         List<String> itemsString = new ArrayList<>();
         items.forEach((itemStock) -> {
-            Item item = mItemDao.getItemById(itemStock.itemId); // this is to show name
-            String itemString = item.getName() + " x" + itemStock.getQuantity();
-            itemsString.add(itemString);
-            }
+                    Item item = mItemDao.getItemById(itemStock.itemId); // this is to show name
+                    String itemString = item.getName() + " x" + itemStock.getQuantity();
+                    itemsString.add(itemString);
+                }
         );
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
         cancel_list.setAdapter(adapter);
@@ -72,7 +73,7 @@ public class CancelOrder extends AppCompatActivity {
             public void onClick(View v) {
                 String selectedItemString = (String) cancel_list.getSelectedItem();
                 ItemStock selectedItem = null;
-                for(ItemStock itemStock : items){
+                for (ItemStock itemStock : items) {
                     Item item = mItemDao.getItemById(itemStock.itemId);
                     String itemString = item.getName() + " x" + itemStock.getQuantity();
                     if (itemString.equals(selectedItemString)) {

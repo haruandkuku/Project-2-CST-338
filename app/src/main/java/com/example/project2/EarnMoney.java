@@ -3,6 +3,7 @@ package com.example.project2;
 import static com.example.project2.AppDatabase.MIGRATION_2_3;
 import static com.example.project2.AppDatabase.MIGRATION_4_5;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +44,6 @@ public class EarnMoney extends AppCompatActivity {
                 .build()
                 .userMoneyDao();
         currentUserMoney = mUserMoneyDao.getUserMoneyByUserId(currentUserEarnMoney.id);
-//        mUserMoneyDao.setPredefinedMoney();
         user_money_display.setText("$"+ Integer.toString(currentUserMoney.getMoneyAmount()));
         earn_money_back.setOnClickListener(new View.OnClickListener() {
             @Override
