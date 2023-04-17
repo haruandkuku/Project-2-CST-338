@@ -14,7 +14,6 @@ import com.example.project2.databinding.AdminPageBinding;
 public class Admin extends AppCompatActivity {
 
     Button add_item_button;
-    Button delete_item_button;
     Button delete_user_button;
     Button back_button_admin;
     Button set_money_button;
@@ -29,7 +28,6 @@ public class Admin extends AppCompatActivity {
         setContentView(view);
 
         add_item_button = mAdminPageBinding.addItemButton;
-        delete_item_button = mAdminPageBinding.deleteItemButton;
         delete_user_button = mAdminPageBinding.deleteUserButton;
         back_button_admin = mAdminPageBinding.backButtonAdmin;
         set_money_button = mAdminPageBinding.setUserMoneyButton;
@@ -39,14 +37,6 @@ public class Admin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = AdminDeleteUser.getIntent(getApplicationContext());
-                intent.putExtra("currentUser", currentUserAdmin);
-                startActivity(intent);
-            }
-        });
-        delete_item_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = AdminDeleteItem.getIntent(getApplicationContext());
                 intent.putExtra("currentUser", currentUserAdmin);
                 startActivity(intent);
             }
